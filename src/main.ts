@@ -18,11 +18,14 @@ async function bootstrap() {
       transformOptions: {
         enableImplicitConversion: true, // This allows class-transformer to convert types implicitly
       },
-    })
-  )
+    }),
+  );
 
   const configService = app.get(ConfigService);
-
+  app.enableCors({
+    origin: configService.get('FRONTEND_URL'),
+    credentials: true,
+  });
   await app.listen(configService.getOrThrow('PORT'));
 }
 bootstrap();
